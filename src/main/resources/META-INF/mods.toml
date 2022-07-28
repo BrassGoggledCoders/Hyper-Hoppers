@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/BrassGoggledCoders/Hyper-Hoppers/issues"
+license="MIT"
+
+[[mods]]
+    modId="hyper_hoppers"
+    version="${file.jarVersion}"
+    displayName="Hyper-Hoppers"
+    credits="BrassGoggledCoders Artists"
+    authors="SkySom, DivineAspect"
+    description='''
+        Hoppers but HYPER
+    '''
+
+[[dependencies.hyper_hoppers]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40.1.0,)"
+    ordering="NONE"
+    side="BOTH"
