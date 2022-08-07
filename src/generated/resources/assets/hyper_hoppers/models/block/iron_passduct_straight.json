@@ -1,6 +1,0 @@
-{
-  "parent": "hyper_hoppers:block/passduct_straight",
-  "textures": {
-    "material": "minecraft:block/iron_block"
-  }
-}

@@ -1,116 +1,240 @@
 {
-  "variants": {
-    "facing=down,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight",
-      "x": 180,
-      "y": 180
+  "multipart": [
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top",
+        "x": 180
+      }
     },
-    "facing=up,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight"
+    {
+      "when": {
+        "spout": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "x": 180
+      }
     },
-    "facing=north,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight",
-      "x": 270
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top"
+      }
     },
-    "facing=south,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight",
-      "x": 90
+    {
+      "when": {
+        "spout": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout"
+      }
     },
-    "facing=west,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight"
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top",
+        "x": 90
+      }
     },
-    "facing=east,shape=straight": {
-      "model": "hyper_hoppers:block/iron_passduct_straight"
+    {
+      "when": {
+        "spout": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "x": 90
+      }
     },
-    "facing=down,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 180,
-      "y": 180
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top",
+        "x": 90,
+        "y": 180
+      }
     },
-    "facing=up,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "x": 90,
+        "y": 180
+      }
     },
-    "facing=north,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 270
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top",
+        "x": 90,
+        "y": 270
+      }
     },
-    "facing=south,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 90
+    {
+      "when": {
+        "spout": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "x": 90,
+        "y": 270
+      }
     },
-    "facing=west,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_top",
+        "x": 90,
+        "y": 90
+      }
     },
-    "facing=east,shape=zero": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "x": 90,
+        "y": 90
+      }
     },
-    "facing=down,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 180,
-      "y": 270
+    {
+      "when": {
+        "spout": "down|up",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "x": 180
+      }
     },
-    "facing=up,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "y": 90
+    {
+      "when": {
+        "spout": "north|south|west|east",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "x": 180
+      }
     },
-    "facing=north,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 270
+    {
+      "when": {
+        "spout": "down|up",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight"
+      }
     },
-    "facing=south,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 90
+    {
+      "when": {
+        "spout": "north|south|west|east",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle"
+      }
     },
-    "facing=west,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "north|south",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "x": 90
+      }
     },
-    "facing=east,shape=ninety": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "down|up|west|east",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "x": 90
+      }
     },
-    "facing=down,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 180
+    {
+      "when": {
+        "spout": "north|south",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "x": 90,
+        "y": 180
+      }
     },
-    "facing=up,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "y": 180
+    {
+      "when": {
+        "spout": "down|up|west|east",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "x": 90,
+        "y": 180
+      }
     },
-    "facing=north,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 270
+    {
+      "when": {
+        "spout": "west|east",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "x": 90,
+        "y": 270
+      }
     },
-    "facing=south,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 90
+    {
+      "when": {
+        "spout": "down|up|north|south",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "x": 90,
+        "y": 270
+      }
     },
-    "facing=west,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "west|east",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "x": 90,
+        "y": 90
+      }
     },
-    "facing=east,shape=one_eighty": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
-    },
-    "facing=down,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 180,
-      "y": 90
-    },
-    "facing=up,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "y": 270
-    },
-    "facing=north,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 270
-    },
-    "facing=south,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled",
-      "x": 90
-    },
-    "facing=west,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
-    },
-    "facing=east,shape=two_seventy": {
-      "model": "hyper_hoppers:block/iron_passduct_angled"
+    {
+      "when": {
+        "spout": "down|up|north|south",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "x": 90,
+        "y": 90
+      }
     }
-  }
+  ]
 }
