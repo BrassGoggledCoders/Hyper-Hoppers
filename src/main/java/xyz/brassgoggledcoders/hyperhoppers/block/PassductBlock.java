@@ -2,7 +2,9 @@ package xyz.brassgoggledcoders.hyperhoppers.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,13 +20,19 @@ import xyz.brassgoggledcoders.hyperhoppers.blockentity.PassductBlockEntity;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 public class PassductBlock extends Block implements EntityBlock {
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final Property<Direction> SPOUT = EnumProperty.create("spout", Direction.class);
 
-    public PassductBlock(Properties properties) {
-        super(properties);
+    private final int slots;
+    private final int maxAttempts;
+
+    public PassductBlock(Properties properties, int slots, int maxAttempts) {
+        super(properties.randomTicks());
+        this.slots = slots;
+        this.maxAttempts = maxAttempts;
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(FACING, Direction.UP)
                 .setValue(SPOUT, Direction.DOWN)
@@ -39,7 +47,7 @@ public class PassductBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(@NotNull BlockPlaceContext pContext) {
-        Direction spout = pContext.getClickedFace();
+        Direction spout = pContext.getClickedFace().getOpposite();
         Direction facing = pContext.getNearestLookingDirection().getOpposite();
 
         if (spout == facing) {
@@ -49,6 +57,13 @@ public class PassductBlock extends Block implements EntityBlock {
         return this.defaultBlockState()
                 .setValue(FACING, facing)
                 .setValue(SPOUT, spout);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
+        pLevel.scheduleTick(pPos, pState.getBlock(), 20);
     }
 
     @Nullable
@@ -61,5 +76,31 @@ public class PassductBlock extends Block implements EntityBlock {
                 pPos,
                 pState
         );
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
+            passductBlock.push(true);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
+            passductBlock.push(false);
+        }
+    }
+
+    public int getSlots() {
+        return slots;
+    }
+
+    public int getMaxAttempts() {
+        return maxAttempts;
     }
 }

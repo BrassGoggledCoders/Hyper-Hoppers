@@ -10,7 +10,7 @@ import xyz.brassgoggledcoders.hyperhoppers.util.BlockModelHelper;
 public class HyppersBlocks {
     public static final BlockEntry<PassductBlock> IRON_PASSDUCT = HyperHoppers.getRegistrate()
             .object("iron_passduct")
-            .block(PassductBlock::new)
+            .block(properties -> new PassductBlock(properties, 1, 4))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(BlockBehaviour.Properties::randomTicks)
             .blockstate(BlockModelHelper::passductBlockState)
