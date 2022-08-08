@@ -121,7 +121,7 @@ public class PassductBlockEntity extends BlockEntity {
 
     public void onChange() {
         this.setChanged();
-        if (this.getItemHandler().hasItems() && this.level != null) {
+        if (this.scheduleTick() && this.getItemHandler().hasItems() && this.level != null) {
             if (!this.level.getBlockTicks().hasScheduledTick(this.getBlockPos(), this.getBlockState().getBlock())) {
                 this.level.scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
             }
