@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    " i "
+  ],
+  "key": {
+    "c": {
+      "tag": "forge:chests"
+    },
+    "i": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "hyper_hoppers:gold_passduct",
+    "count": 4
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wcw",
+    " w "
+  ],
+  "key": {
+    "c": {
+      "tag": "forge:chests"
+    },
+    "w": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "hyper_hoppers:wood_passduct",
+    "count": 4
+  }
+}
