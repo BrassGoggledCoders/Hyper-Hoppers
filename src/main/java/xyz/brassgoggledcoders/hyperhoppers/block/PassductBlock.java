@@ -158,6 +158,24 @@ public class PassductBlock extends Block implements EntityBlock {
 
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasAnalogOutputSignal(@NotNull BlockState pState) {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
+        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
+            return ItemHandlerHelper.calcRedstoneFromInventory(passductBlock.getItemHandler());
+        } else {
+            return 0;
+        }
+    }
+
     public int getSlots() {
         return slots;
     }
