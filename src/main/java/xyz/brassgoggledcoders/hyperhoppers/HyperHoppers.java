@@ -4,7 +4,6 @@ import com.google.common.base.Suppliers;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
@@ -20,9 +19,9 @@ public class HyperHoppers {
                 @Override
                 @NotNull
                 public ItemStack makeIcon() {
-                    return new ItemStack(Items.HOPPER);
+                    return HyppersBlocks.IRON_PASSDUCT.asStack();
                 }
-            })
+            }, "Hyper Hoppers")
     );
 
     public HyperHoppers() {

@@ -1,12 +1,18 @@
 package xyz.brassgoggledcoders.hyperhoppers.content;
 
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.common.Tags;
 import xyz.brassgoggledcoders.hyperhoppers.HyperHoppers;
 import xyz.brassgoggledcoders.hyperhoppers.block.PassductBlock;
 import xyz.brassgoggledcoders.hyperhoppers.blockentity.PassductBlockEntity;
@@ -26,6 +32,14 @@ public class HyppersBlocks {
             .blockstate(BlockModelHelper::passductBlockState)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .item()
+            .recipe((context, provider) -> ShapedRecipeBuilder.shaped(context.get(), 4)
+                    .pattern("ici")
+                    .pattern(" i ")
+                    .define('c', Tags.Items.CHESTS)
+                    .define('i', Tags.Items.INGOTS_IRON)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(Tags.Items.INGOTS_IRON))
+                    .save(provider)
+            )
             .model((context, provider) -> provider.blockItem(context, "_full"))
             .build()
             .register();
@@ -43,6 +57,14 @@ public class HyppersBlocks {
             .blockstate(BlockModelHelper::passductBlockState)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .item()
+            .recipe((context, provider) -> ShapedRecipeBuilder.shaped(context.get(), 4)
+                    .pattern("ici")
+                    .pattern(" i ")
+                    .define('c', Tags.Items.CHESTS)
+                    .define('i', Tags.Items.INGOTS_COPPER)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(Tags.Items.INGOTS_COPPER))
+                    .save(provider)
+            )
             .model((context, provider) -> provider.blockItem(context, "_full"))
             .build()
             .register();
@@ -60,6 +82,14 @@ public class HyppersBlocks {
             .blockstate(BlockModelHelper::passductBlockState)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .item()
+            .recipe((context, provider) -> ShapedRecipeBuilder.shaped(context.get(), 4)
+                    .pattern("ici")
+                    .pattern(" i ")
+                    .define('c', Tags.Items.CHESTS)
+                    .define('i', Tags.Items.INGOTS_GOLD)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(Tags.Items.INGOTS_GOLD))
+                    .save(provider)
+            )
             .model((context, provider) -> provider.blockItem(context, "_full"))
             .build()
             .register();
@@ -77,6 +107,14 @@ public class HyppersBlocks {
             .blockstate(BlockModelHelper::passductBlockState)
             .tag(BlockTags.MINEABLE_WITH_AXE)
             .item()
+            .recipe((context, provider) -> ShapedRecipeBuilder.shaped(context.get(), 4)
+                    .pattern("wcw")
+                    .pattern(" w ")
+                    .define('c', Tags.Items.CHESTS)
+                    .define('w', ItemTags.PLANKS)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(ItemTags.PLANKS))
+                    .save(provider)
+            )
             .model((context, provider) -> provider.blockItem(context, "_full"))
             .build()
             .register();
