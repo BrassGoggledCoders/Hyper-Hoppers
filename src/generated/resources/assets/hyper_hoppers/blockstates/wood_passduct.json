@@ -5,7 +5,7 @@
         "facing": "down"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top",
+        "model": "hyper_hoppers:block/wood_passduct_top",
         "x": 180
       }
     },
@@ -14,7 +14,7 @@
         "spout": "up"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "model": "hyper_hoppers:block/wood_passduct_spout",
         "x": 180
       }
     },
@@ -24,7 +24,7 @@
         "facing": "down"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight",
         "x": 180
       }
     },
@@ -34,7 +34,7 @@
         "facing": "down"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle",
         "x": 180
       }
     },
@@ -43,7 +43,7 @@
         "facing": "up"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top"
+        "model": "hyper_hoppers:block/wood_passduct_top"
       }
     },
     {
@@ -51,7 +51,7 @@
         "spout": "down"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout"
+        "model": "hyper_hoppers:block/wood_passduct_spout"
       }
     },
     {
@@ -60,7 +60,7 @@
         "facing": "up"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight"
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight"
       }
     },
     {
@@ -69,7 +69,7 @@
         "facing": "up"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle"
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle"
       }
     },
     {
@@ -77,7 +77,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top",
+        "model": "hyper_hoppers:block/wood_passduct_top",
         "x": 90
       }
     },
@@ -86,7 +86,7 @@
         "spout": "south"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "model": "hyper_hoppers:block/wood_passduct_spout",
         "x": 90
       }
     },
@@ -96,7 +96,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight",
         "x": 90
       }
     },
@@ -106,7 +106,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle",
         "x": 90
       }
     },
@@ -115,7 +115,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top",
+        "model": "hyper_hoppers:block/wood_passduct_top",
         "x": 90,
         "y": 180
       }
@@ -125,7 +125,7 @@
         "spout": "north"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "model": "hyper_hoppers:block/wood_passduct_spout",
         "x": 90,
         "y": 180
       }
@@ -136,7 +136,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight",
         "x": 90,
         "y": 180
       }
@@ -147,7 +147,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle",
         "x": 90,
         "y": 180
       }
@@ -157,7 +157,7 @@
         "facing": "west"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top",
+        "model": "hyper_hoppers:block/wood_passduct_top",
         "x": 90,
         "y": 270
       }
@@ -167,7 +167,7 @@
         "spout": "east"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "model": "hyper_hoppers:block/wood_passduct_spout",
         "x": 90,
         "y": 270
       }
@@ -178,7 +178,7 @@
         "facing": "west"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight",
         "x": 90,
         "y": 270
       }
@@ -189,7 +189,7 @@
         "facing": "west"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle",
         "x": 90,
         "y": 270
       }
@@ -199,7 +199,7 @@
         "facing": "east"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_top",
+        "model": "hyper_hoppers:block/wood_passduct_top",
         "x": 90,
         "y": 90
       }
@@ -209,7 +209,7 @@
         "spout": "west"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_spout",
+        "model": "hyper_hoppers:block/wood_passduct_spout",
         "x": 90,
         "y": 90
       }
@@ -220,7 +220,7 @@
         "facing": "east"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_straight",
+        "model": "hyper_hoppers:block/wood_passduct_middle_straight",
         "x": 90,
         "y": 90
       }
@@ -231,7 +231,7 @@
         "facing": "east"
       },
       "apply": {
-        "model": "hyper_hoppers:block/iron_passduct_middle_angle",
+        "model": "hyper_hoppers:block/wood_passduct_middle_angle",
         "x": 90,
         "y": 90
       }

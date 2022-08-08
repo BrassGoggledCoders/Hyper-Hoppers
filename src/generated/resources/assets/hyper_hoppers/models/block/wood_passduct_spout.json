@@ -1,0 +1,6 @@
+{
+  "parent": "hyper_hoppers:block/passduct_spout",
+  "textures": {
+    "material": "hyper_hoppers:block/wood_passduct"
+  }
+}

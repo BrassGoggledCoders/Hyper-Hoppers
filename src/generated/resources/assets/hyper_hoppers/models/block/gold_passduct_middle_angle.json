@@ -1,0 +1,6 @@
+{
+  "parent": "hyper_hoppers:block/passduct_middle_angle",
+  "textures": {
+    "material": "hyper_hoppers:block/gold_passduct"
+  }
+}

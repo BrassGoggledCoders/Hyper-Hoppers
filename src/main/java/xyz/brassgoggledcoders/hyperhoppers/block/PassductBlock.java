@@ -29,10 +29,13 @@ public class PassductBlock extends Block implements EntityBlock {
     private final int slots;
     private final int maxAttempts;
 
-    public PassductBlock(Properties properties, int slots, int maxAttempts) {
+    private final boolean scheduleTicks;
+
+    public PassductBlock(Properties properties, int slots, int maxAttempts, boolean scheduleTicks) {
         super(properties.randomTicks());
         this.slots = slots;
         this.maxAttempts = maxAttempts;
+        this.scheduleTicks = scheduleTicks;
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(FACING, Direction.UP)
                 .setValue(SPOUT, Direction.DOWN)
@@ -71,8 +74,7 @@ public class PassductBlock extends Block implements EntityBlock {
     @ParametersAreNonnullByDefault
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new PassductBlockEntity(
-                HyppersBlocks.IRON_PASSDUCT.getSibling(ForgeRegistries.BLOCK_ENTITIES)
-                        .get(),
+                HyppersBlocks.PASSDUCT_ENTITY.get(),
                 pPos,
                 pState
         );
@@ -102,5 +104,9 @@ public class PassductBlock extends Block implements EntityBlock {
 
     public int getMaxAttempts() {
         return maxAttempts;
+    }
+
+    public boolean isScheduleTicks() {
+        return scheduleTicks;
     }
 }

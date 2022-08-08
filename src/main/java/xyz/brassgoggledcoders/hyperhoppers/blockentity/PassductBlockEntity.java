@@ -71,7 +71,7 @@ public class PassductBlockEntity extends BlockEntity {
         } else {
             attempts++;
         }
-        if (attempts < this.getMaxAttempts()) {
+        if (attempts < this.getMaxAttempts() && this.scheduleTick()) {
             if (this.level != null) {
                 this.level.scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
             }
@@ -108,6 +108,10 @@ public class PassductBlockEntity extends BlockEntity {
 
     public int getMaxAttempts() {
         return this.getBlockState().getBlock() instanceof PassductBlock passductBlock ? passductBlock.getMaxAttempts() : 1;
+    }
+
+    public boolean scheduleTick() {
+        return this.getBlockState().getBlock() instanceof PassductBlock passductBlock && passductBlock.isScheduleTicks();
     }
 
     public void onChange() {

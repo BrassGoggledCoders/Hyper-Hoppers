@@ -1,0 +1,6 @@
+{
+  "parent": "hyper_hoppers:block/passduct_middle_straight",
+  "textures": {
+    "material": "hyper_hoppers:block/copper_passduct"
+  }
+}
