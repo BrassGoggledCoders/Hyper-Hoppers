@@ -106,6 +106,10 @@ public class PassductBlockEntity extends BlockEntity {
         this.thisHandlerLazyOptional.invalidate();
     }
 
+    public RunnableItemHandler getItemHandler() {
+        return this.itemHandler;
+    }
+
     public int getMaxAttempts() {
         return this.getBlockState().getBlock() instanceof PassductBlock passductBlock ? passductBlock.getMaxAttempts() : 1;
     }
