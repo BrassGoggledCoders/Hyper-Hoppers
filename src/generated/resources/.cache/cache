@@ -32,3 +32,5 @@ c1cf4391314ed65d3bdf206f466b3aa58ba3ddb1 assets/hyper_hoppers/models/item/wood_p
 4788878a61bb4c51d4d71f3b20bbde1dc4149fbb data/hyper_hoppers/loot_tables/blocks/gold_passduct.json
 95d79e905826cb2b21fa27337a8e7fd5c3367824 data/hyper_hoppers/loot_tables/blocks/iron_passduct.json
 4d0eaf231ed9544be6e7d65d8d45ba90b2b3ac34 data/hyper_hoppers/loot_tables/blocks/wood_passduct.json
+e1fcfa33278be682aee0fe31fd978a5d923893c0 data/minecraft/tags/blocks/mineable/axe.json
+30f6b36732a8e89aad2063f5547b6a4973a9b353 data/minecraft/tags/blocks/mineable/pickaxe.json

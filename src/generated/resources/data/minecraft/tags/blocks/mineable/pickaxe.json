@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "hyper_hoppers:iron_passduct",
+    "hyper_hoppers:copper_passduct",
+    "hyper_hoppers:gold_passduct"
+  ]
+}
