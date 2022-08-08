@@ -46,6 +46,8 @@ public class PassductBlockEntity extends BlockEntity {
         if (itemHandler.hasItems() && this.level != null) {
             if (nextSlot + 1 == this.itemHandler.getSlots()) {
                 attempts++;
+            } else if (nextSlot >= this.itemHandler.getSlots()) {
+                this.nextSlot = 0;
             }
             LazyOptional<IItemHandler> otherHandler = this.getHandlerAtSpout();
 
@@ -67,7 +69,6 @@ public class PassductBlockEntity extends BlockEntity {
                     this.nextSlot++;
                 }
             });
-
         } else {
             attempts++;
         }

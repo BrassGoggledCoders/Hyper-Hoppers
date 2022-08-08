@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 public class WeakConsumer<T, U> implements Consumer<T> {
     private final BiConsumer<T, U> consumer;
     private final WeakReference<U> reference;
+
     public WeakConsumer(BiConsumer<T, U> consumer, U reference) {
         this.consumer = consumer;
         this.reference = new WeakReference<>(reference);
