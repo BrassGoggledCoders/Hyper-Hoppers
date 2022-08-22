@@ -111,7 +111,9 @@ public class PassductBlock extends Block implements EntityBlock {
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
-        pLevel.scheduleTick(pPos, pState.getBlock(), 20);
+        if (scheduleTicks) {
+            pLevel.scheduleTick(pPos, pState.getBlock(), 20);
+        }
     }
 
     @Nullable
