@@ -11,19 +11,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.system.CallbackI;
 import xyz.brassgoggledcoders.hyperhoppers.capability.RunnableItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
+import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.FilterMenu;
-import xyz.brassgoggledcoders.hyperhoppers.menu.ItemStackMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.module.IModuleProvider;
 import xyz.brassgoggledcoders.hyperhoppers.module.Module;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.function.Function;
 
 public class FilterModuleItem extends Item implements IModuleProvider {
@@ -49,8 +46,8 @@ public class FilterModuleItem extends Item implements IModuleProvider {
         if (Inventory.isHotbarSlot(selected) && pPlayer instanceof ServerPlayer serverPlayer) {
             NetworkHooks.openGui(
                     serverPlayer,
-                    new ItemStackMenuProvider(
-                            itemstack,
+                    new BasicMenuProvider(
+                            itemstack.getHoverName(),
                             (containerId, inventory) -> new FilterMenu(
                                     HyppersMenus.FILTER_MENU.get(),
                                     containerId,

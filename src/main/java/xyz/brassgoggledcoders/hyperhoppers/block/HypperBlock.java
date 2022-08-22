@@ -6,8 +6,9 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Containers;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,14 +20,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.brassgoggledcoders.hyperhoppers.blockentity.HypperBlockEntity;
-import xyz.brassgoggledcoders.hyperhoppers.blockentity.PassductBlockEntity;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
 import xyz.brassgoggledcoders.hyperhoppers.slot.HypperSlot;
 
@@ -109,12 +109,23 @@ public class HypperBlock extends Block implements EntityBlock {
                 .setValue(SPOUT, spout);
     }
 
+    @Override
+    @NotNull
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pLevel.getBlockEntity(pPos) instanceof HypperBlockEntity hypperBlockEntity) {
+            hypperBlockEntity.openMenu(pPlayer);
+        }
+        return InteractionResult.sidedSuccess(pLevel.isClientSide());
+    }
+
     @Nullable
     @Override
     @ParametersAreNonnullByDefault
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new PassductBlockEntity(
-                HyppersBlocks.PASSDUCT_ENTITY.get(),
+        return new HypperBlockEntity(
+                HyppersBlocks.HYPPER_ENTITY.get(),
                 pPos,
                 pState
         );
@@ -124,8 +135,8 @@ public class HypperBlock extends Block implements EntityBlock {
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
-        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
-            passductBlock.push(true);
+        if (pLevel.getBlockEntity(pPos) instanceof HypperBlockEntity hypperBlockEntity) {
+            hypperBlockEntity.tick(true);
         }
     }
 
@@ -133,8 +144,8 @@ public class HypperBlock extends Block implements EntityBlock {
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
-        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
-            passductBlock.push(false);
+        if (pLevel.getBlockEntity(pPos) instanceof HypperBlockEntity hypperBlockEntity) {
+            hypperBlockEntity.tick(false);
         }
     }
 
@@ -164,8 +175,8 @@ public class HypperBlock extends Block implements EntityBlock {
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
-        if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
-            return ItemHandlerHelper.calcRedstoneFromInventory(passductBlock.getItemHandler());
+        if (pLevel.getBlockEntity(pPos) instanceof HypperBlockEntity hypperBlockEntity) {
+            return hypperBlockEntity.getAnalogSignal();
         } else {
             return 0;
         }

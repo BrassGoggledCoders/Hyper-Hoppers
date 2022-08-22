@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.hyperhoppers;
 
 import com.google.common.base.Suppliers;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -34,5 +35,9 @@ public class HyperHoppers {
 
     public static Registrate getRegistrate() {
         return REGISTRATE_SUPPLIER.get();
+    }
+
+    public static ResourceLocation rl(String s) {
+        return new ResourceLocation(ID, s);
     }
 }

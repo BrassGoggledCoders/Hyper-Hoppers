@@ -12,19 +12,19 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.BiFunction;
 
-public class ItemStackMenuProvider implements MenuProvider {
-    private final ItemStack itemStack;
+public class BasicMenuProvider implements MenuProvider {
+    private final Component name;
     private final BiFunction<Integer, Inventory, AbstractContainerMenu> menuMaker;
 
-    public ItemStackMenuProvider(ItemStack itemStack, BiFunction<Integer, Inventory, AbstractContainerMenu> menuMaker) {
-        this.itemStack = itemStack;
+    public BasicMenuProvider(Component name, BiFunction<Integer, Inventory, AbstractContainerMenu> menuMaker) {
+        this.name = name;
         this.menuMaker = menuMaker;
     }
 
     @Override
     @NotNull
     public Component getDisplayName() {
-        return itemStack.getHoverName();
+        return this.name;
     }
 
     @Nullable

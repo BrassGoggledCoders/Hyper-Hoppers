@@ -14,11 +14,23 @@ public class ItemSlot extends HypperSlot {
         }
     }
 
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-
+    @Override
     public ItemStack getItemStack() {
         return this.itemStack;
+    }
+
+    @Override
+    public ItemStack extract(int count, boolean simulate) {
+
+        return null;
+    }
+
+    @Override
+    public ItemStack insert(ItemStack itemStack, boolean simulate) {
+        return null;
+    }
+
+    public void setItemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 }
