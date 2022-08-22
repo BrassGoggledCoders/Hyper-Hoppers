@@ -4,5 +4,6 @@
   "block.hyper_hoppers.iron_hypper": "Iron Hypper",
   "block.hyper_hoppers.iron_passduct": "Iron Passduct",
   "block.hyper_hoppers.wood_passduct": "Wood Passduct",
+  "item.hyper_hoppers.soft_whitelist_filter": "Soft Whitelist Filter",
   "itemGroup.hyper_hoppers": "Hyper Hoppers"
 }

@@ -12,7 +12,7 @@ import xyz.brassgoggledcoders.hyperhoppers.block.PassductBlock;
 import java.util.Arrays;
 
 public class BlockModelHelper {
-    public static void passductBlockState(DataGenContext<Block, PassductBlock> context, RegistrateBlockstateProvider provider) {
+    public static <T extends Block> void passductBlockState(DataGenContext<Block, T> context, RegistrateBlockstateProvider provider) {
         BlockModelBuilder top = provider.models()
                 .withExistingParent("%s_top".formatted(context.getName()), provider.modLoc("block/passduct_top"))
                 .texture("material", provider.modLoc("block/%s".formatted(context.getName())));

@@ -7,6 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
+import xyz.brassgoggledcoders.hyperhoppers.content.HyppersItems;
+import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 
 import java.util.function.Supplier;
 
@@ -26,6 +28,8 @@ public class HyperHoppers {
 
     public HyperHoppers() {
         HyppersBlocks.setup();
+        HyppersItems.setup();
+        HyppersMenus.setup();
     }
 
     public static Registrate getRegistrate() {
