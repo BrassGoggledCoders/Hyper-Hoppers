@@ -1,0 +1,240 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "north|south|west|east",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top"
+      }
+    },
+    {
+      "when": {
+        "spout": "down"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout"
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight"
+      }
+    },
+    {
+      "when": {
+        "spout": "north|south|west|east",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "north|south",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up|west|east",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "north"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "north|south",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up|west|east",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "spout": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "spout": "west|east",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up|north|south",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_top",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "west"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_spout",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "west|east",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_straight",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "spout": "down|up|north|south",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "hyper_hoppers:block/iron_hypper_middle_angle",
+        "x": 90,
+        "y": 90
+      }
+    }
+  ]
+}

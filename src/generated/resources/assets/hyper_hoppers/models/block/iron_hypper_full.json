@@ -1,0 +1,24 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "parts": {
+    "top": {
+      "parent": "hyper_hoppers:block/passduct_top",
+      "textures": {
+        "material": "hyper_hoppers:block/iron_hypper"
+      }
+    },
+    "middle": {
+      "parent": "hyper_hoppers:block/passduct_middle_straight",
+      "textures": {
+        "material": "hyper_hoppers:block/iron_hypper"
+      }
+    },
+    "spout": {
+      "parent": "hyper_hoppers:block/passduct_spout",
+      "textures": {
+        "material": "hyper_hoppers:block/iron_hypper"
+      }
+    }
+  }
+}

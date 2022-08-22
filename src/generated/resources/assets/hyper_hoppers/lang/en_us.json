@@ -1,6 +1,7 @@
 {
   "block.hyper_hoppers.copper_passduct": "Copper Passduct",
   "block.hyper_hoppers.gold_passduct": "Gold Passduct",
+  "block.hyper_hoppers.iron_hypper": "Iron Hypper",
   "block.hyper_hoppers.iron_passduct": "Iron Passduct",
   "block.hyper_hoppers.wood_passduct": "Wood Passduct",
   "itemGroup.hyper_hoppers": "Hyper Hoppers"
