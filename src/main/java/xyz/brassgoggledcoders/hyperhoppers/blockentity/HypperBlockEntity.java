@@ -21,6 +21,8 @@ public class HypperBlockEntity extends BlockEntity {
     private final HypperSlotsHandler slots;
     private final ModuleItemHandler modules;
 
+    private int countdown;
+
     public HypperBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
         this.slots = new HypperSlotsHandler(5, this::setChanged);
@@ -53,6 +55,12 @@ public class HypperBlockEntity extends BlockEntity {
     }
 
     public void tick(boolean random) {
+        if (random || this.countdown-- <= 0) {
+            moveThings();
+        }
+    }
+
+    private void moveThings() {
 
     }
 

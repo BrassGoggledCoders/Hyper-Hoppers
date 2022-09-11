@@ -15,6 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -182,6 +184,20 @@ public class HypperBlock extends Block implements EntityBlock {
         }
     }
 
+    @Nullable
+    @Override
+    @ParametersAreNonnullByDefault
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (!pLevel.isClientSide()) {
+           return createTickerHelper(
+                   pBlockEntityType,
+                   HyppersBlocks.HYPPER_ENTITY.get(),
+                   (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(false)
+           );
+        }
+        return null;
+    }
+
     public int getSlots() {
         return slots;
     }
@@ -192,5 +208,10 @@ public class HypperBlock extends Block implements EntityBlock {
 
     public int getRetryWait() {
         return retryWait;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> p_152133_, BlockEntityType<E> p_152134_, BlockEntityTicker<? super E> p_152135_) {
+        return p_152134_ == p_152133_ ? (BlockEntityTicker<A>)p_152135_ : null;
     }
 }
