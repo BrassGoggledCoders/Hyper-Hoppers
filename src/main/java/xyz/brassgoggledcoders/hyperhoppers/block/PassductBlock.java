@@ -12,11 +12,13 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,6 +38,7 @@ import java.util.Random;
 public class PassductBlock extends Block implements EntityBlock {
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final Property<Direction> SPOUT = EnumProperty.create("spout", Direction.class);
+    public static final BooleanProperty JAMMED = HyperHoppersBlockStateProperties.JAMMED;
 
     private static final Table<Direction, Direction, VoxelShape> VOXEL_SHAPE_TABLE = HashBasedTable.create();
     private static final EnumMap<Direction, VoxelShape> FACING_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
@@ -59,16 +62,14 @@ public class PassductBlock extends Block implements EntityBlock {
     private final int slots;
     private final int maxAttempts;
 
-    private final boolean scheduleTicks;
-
-    public PassductBlock(Properties properties, int slots, int maxAttempts, boolean scheduleTicks) {
-        super(properties.randomTicks());
+    public PassductBlock(Properties properties, int slots, int maxAttempts) {
+        super(properties);
         this.slots = slots;
         this.maxAttempts = maxAttempts;
-        this.scheduleTicks = scheduleTicks;
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(FACING, Direction.UP)
                 .setValue(SPOUT, Direction.DOWN)
+                .setValue(JAMMED, false)
         );
     }
 
@@ -89,7 +90,7 @@ public class PassductBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, SPOUT);
+        pBuilder.add(FACING, SPOUT, JAMMED);
     }
 
     @Nullable
@@ -111,7 +112,7 @@ public class PassductBlock extends Block implements EntityBlock {
     @SuppressWarnings("deprecation")
     @ParametersAreNonnullByDefault
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
-        if (scheduleTicks) {
+        if (!pState.isRandomlyTicking()) {
             pLevel.scheduleTick(pPos, pState.getBlock(), 20);
         }
     }
@@ -132,7 +133,10 @@ public class PassductBlock extends Block implements EntityBlock {
     @ParametersAreNonnullByDefault
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
-            passductBlock.push(true);
+            boolean jammed = passductBlock.pushOnce();
+            if (jammed != pState.getValue(JAMMED)) {
+                pLevel.setBlock(pPos, pState.setValue(JAMMED, jammed), Block.UPDATE_ALL);
+            }
         }
     }
 
@@ -141,7 +145,10 @@ public class PassductBlock extends Block implements EntityBlock {
     @ParametersAreNonnullByDefault
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         if (pLevel.getBlockEntity(pPos) instanceof PassductBlockEntity passductBlock) {
-            passductBlock.push(false);
+            boolean jammed = passductBlock.routinePush();
+            if (jammed != pState.getValue(JAMMED)) {
+                pLevel.setBlock(pPos, pState.setValue(JAMMED, jammed), Block.UPDATE_ALL);
+            }
         }
     }
 
@@ -175,6 +182,15 @@ public class PassductBlock extends Block implements EntityBlock {
             return ItemHandlerHelper.calcRedstoneFromInventory(passductBlock.getItemHandler());
         } else {
             return 0;
+        }
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRandom) {
+        super.animateTick(pState, pLevel, pPos, pRandom);
+        if (pState.getValue(JAMMED)) {
+            CampfireBlock.makeParticles(pLevel, pPos, false, false);
         }
     }
 

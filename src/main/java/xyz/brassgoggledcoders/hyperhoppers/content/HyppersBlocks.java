@@ -21,7 +21,7 @@ import xyz.brassgoggledcoders.hyperhoppers.util.BlockModelHelper;
 public class HyppersBlocks {
     public static final BlockEntry<PassductBlock> IRON_PASSDUCT = HyperHoppers.getRegistrate()
             .object("iron_passduct")
-            .block(properties -> new PassductBlock(properties, 1, 4, true))
+            .block(properties -> new PassductBlock(properties, 1, 4))
             .initialProperties(Material.METAL, MaterialColor.METAL)
             .properties(properties -> properties.strength(3.0F, 4.8F)
                     .sound(SoundType.METAL)
@@ -71,7 +71,7 @@ public class HyppersBlocks {
 
     public static final BlockEntry<PassductBlock> COPPER_PASSDUCT = HyperHoppers.getRegistrate()
             .object("copper_passduct")
-            .block(properties -> new PassductBlock(properties, 3, 1, true))
+            .block(properties -> new PassductBlock(properties, 3, 1))
             .initialProperties(Material.METAL, MaterialColor.COLOR_ORANGE)
             .properties(properties -> properties.strength(3.0F, 4.8F)
                     .sound(SoundType.METAL)
@@ -96,7 +96,7 @@ public class HyppersBlocks {
 
     public static final BlockEntry<PassductBlock> GOLD_PASSDUCT = HyperHoppers.getRegistrate()
             .object("gold_passduct")
-            .block(properties -> new PassductBlock(properties, 5, 1, true))
+            .block(properties -> new PassductBlock(properties, 5, 1))
             .initialProperties(Material.METAL, MaterialColor.GOLD)
             .properties(properties -> properties.strength(3.0F, 4.8F)
                     .sound(SoundType.METAL)
@@ -121,10 +121,11 @@ public class HyppersBlocks {
 
     public static final BlockEntry<PassductBlock> WOOD_PASSDUCT = HyperHoppers.getRegistrate()
             .object("wood_passduct")
-            .block(properties -> new PassductBlock(properties, 1, 1, false))
+            .block(properties -> new PassductBlock(properties, 1, 1))
             .initialProperties(Material.WOOD, MaterialColor.WOOD)
             .properties(properties -> properties.strength(3.0F, 4.8F)
                     .sound(SoundType.WOOD)
+                    .randomTicks()
             )
             .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
             .properties(BlockBehaviour.Properties::noOcclusion)
