@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.hyperhoppers.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,6 +17,8 @@ import org.jetbrains.annotations.Nullable;
 import xyz.brassgoggledcoders.hyperhoppers.block.PassductBlock;
 import xyz.brassgoggledcoders.hyperhoppers.capability.InputOnlyItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.capability.RunnableItemHandler;
+
+import java.util.Iterator;
 
 public class PassductBlockEntity extends BlockEntity {
     private int attempts = 0;
@@ -39,10 +42,12 @@ public class PassductBlockEntity extends BlockEntity {
         return new InputOnlyItemHandler(this.itemHandler);
     }
 
-    public void push(boolean random) {
-        if (random) {
-            attempts = 0;
-        }
+    /**
+     *
+     * @param random if via random tick and not scheduled
+     * @return if the block should be considered jammed
+     */
+    public boolean routinePush() {
         if (itemHandler.hasItems() && this.level != null) {
             if (nextSlot + 1 == this.itemHandler.getSlots()) {
                 attempts++;
@@ -72,10 +77,33 @@ public class PassductBlockEntity extends BlockEntity {
         } else {
             attempts++;
         }
-        if (attempts < this.getMaxAttempts() && this.scheduleTick()) {
-            if (this.level != null) {
-                this.level.scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
+        if (this.getLevel() != null) {
+            if (attempts < this.getMaxAttempts()) {
+                if (this.scheduleTick()) {
+                    this.getLevel().scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
+                }
+            } else {
+                this.getLevel().setBlock(this.getBlockPos(), this.getBlockState().setValue(PassductBlock.JAMMED, true), Block.UPDATE_ALL);
             }
+        }
+        return false;
+    }
+
+    public boolean pushOnce() {
+        if (this.itemHandler.hasItems()) {
+            LazyOptional<IItemHandler> handlerAtSpout = this.getHandlerAtSpout();
+            return handlerAtSpout.map(handler -> {
+                        boolean movedItems = false;
+                        Iterator<ItemStack> heldItemStacks = this.itemHandler.iterator();
+                        while (!movedItems && heldItemStacks.hasNext()) {
+                            ItemStack nextAttempt = heldItemStacks.next();
+
+                        }
+                        return true;
+                    })
+                    .orElse(true);
+        } else {
+            return false;
         }
     }
 
@@ -83,7 +111,7 @@ public class PassductBlockEntity extends BlockEntity {
         LazyOptional<IItemHandler> otherHandler = LazyOptional.empty();
         BlockPos handlerPos = this.getBlockPos().relative(this.getBlockState().getValue(PassductBlock.SPOUT));
 
-        if (this.level != null) {
+        if (this.level != null && this.level.isLoaded(handlerPos)) {
             BlockEntity handlerEntity = this.level.getBlockEntity(handlerPos);
             if (handlerEntity != null) {
                 otherHandler = handlerEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
