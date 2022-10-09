@@ -4,29 +4,37 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
-import xyz.brassgoggledcoders.hyperhoppers.capability.HypperSlotsHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import xyz.brassgoggledcoders.hyperhoppers.api.block.IHypper;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.IHypperSlot;
 import xyz.brassgoggledcoders.hyperhoppers.capability.UpgradeItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.HypperMenu;
-import xyz.brassgoggledcoders.hyperhoppers.slot.HypperSlot;
+import xyz.brassgoggledcoders.hyperhoppers.slot.ItemSlot;
 
-import java.util.List;
+import java.util.Objects;
 
-public class HypperBlockEntity extends BlockEntity {
-    private final HypperSlotsHandler slots;
-    private final UpgradeItemHandler modules;
+public class HypperBlockEntity extends BlockEntity implements IHypper {
+    private final UpgradeItemHandler upgrades;
+    private IHypperSlot<?>[] slots;
 
     private int countdown;
 
     public HypperBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
-        this.slots = new HypperSlotsHandler(5, this::setChanged);
-        this.modules = new UpgradeItemHandler(2, this::setChanged);
+        this.slots = new IHypperSlot<?>[5];
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = new ItemSlot();
+        }
+        this.upgrades = new UpgradeItemHandler(2, this::setChanged);
     }
 
     public void openMenu(Player player) {
@@ -41,8 +49,9 @@ public class HypperBlockEntity extends BlockEntity {
                                     HyppersMenus.HYPPER_MENU.get(),
                                     containerId,
                                     inventory,
-                                    modules,
-                                    slots,
+                                    upgrades,
+                                    //TODO FIX THE SLOTS
+                                    new ItemStackHandler(5),
                                     ContainerLevelAccess.create(this.getLevel(), this.getBlockPos())
                             )
                     )
@@ -50,8 +59,24 @@ public class HypperBlockEntity extends BlockEntity {
         }
     }
 
-    public List<HypperSlot> getSlots() {
-        return slots.getHypperSlots();
+    public IHypperSlot<?>[] getSlots() {
+        return this.slots;
+    }
+
+    @Override
+    public void setSlot(int slot, @Nullable IHypperSlot<?> hypperSlot) {
+        this.slots[slot] = Objects.requireNonNullElseGet(hypperSlot, ItemSlot::new);
+    }
+
+    @Override
+    @NotNull
+    public Level getHypperLevel() {
+        return Objects.requireNonNull(this.getLevel());
+    }
+
+    @Override
+    public BlockPos getHypperPos() {
+        return this.getBlockPos();
     }
 
     public void tick(boolean random) {

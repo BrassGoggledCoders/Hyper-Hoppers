@@ -1,4 +1,6 @@
 package xyz.brassgoggledcoders.hyperhoppers.upgrade.slot;
 
-public class FluidicUpgrade {
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.Upgrade;
+
+public class FluidicUpgrade extends Upgrade {
 }

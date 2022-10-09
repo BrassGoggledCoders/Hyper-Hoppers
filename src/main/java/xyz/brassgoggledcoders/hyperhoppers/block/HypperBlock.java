@@ -32,6 +32,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.IHypperSlot;
 import xyz.brassgoggledcoders.hyperhoppers.blockentity.HypperBlockEntity;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
 import xyz.brassgoggledcoders.hyperhoppers.slot.HypperSlot;
@@ -167,8 +168,8 @@ public class HypperBlock extends Block implements EntityBlock, SimpleWaterlogged
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             if (pLevel.getBlockEntity(pPos) instanceof HypperBlockEntity hypperBlockEntity) {
-                for (HypperSlot hypperSlot : hypperBlockEntity.getSlots()) {
-                    hypperSlot.onRemove(pLevel, pPos.getX(), pPos.getY(), pPos.getZ());
+                for (IHypperSlot<?> hypperSlot : hypperBlockEntity.getSlots()) {
+                    hypperSlot.onReplaced(hypperBlockEntity, null);
                 }
             }
             pLevel.updateNeighbourForOutputSignal(pPos, this);

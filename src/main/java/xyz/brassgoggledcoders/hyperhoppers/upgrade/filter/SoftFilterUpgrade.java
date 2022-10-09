@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.hyperhoppers.upgrade.filter;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import xyz.brassgoggledcoders.hyperhoppers.upgrade.Upgrade;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.Upgrade;
 
 import java.util.Collection;
 import java.util.HashSet;

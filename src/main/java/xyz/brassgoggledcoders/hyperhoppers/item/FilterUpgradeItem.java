@@ -15,8 +15,8 @@ import xyz.brassgoggledcoders.hyperhoppers.capability.RunnableItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.FilterMenu;
-import xyz.brassgoggledcoders.hyperhoppers.upgrade.IUpgradeProvider;
-import xyz.brassgoggledcoders.hyperhoppers.upgrade.Upgrade;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.IUpgradeProvider;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.Upgrade;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.hyperhoppers.upgrade;
+package xyz.brassgoggledcoders.hyperhoppers.api.upgrade;
 
 import net.minecraft.world.item.ItemStack;
 

@@ -5,8 +5,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
-import xyz.brassgoggledcoders.hyperhoppers.upgrade.IUpgradeProvider;
-import xyz.brassgoggledcoders.hyperhoppers.upgrade.Upgrade;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.IUpgradeProvider;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.Upgrade;
 
 import java.util.Collections;
 import java.util.HashSet;
