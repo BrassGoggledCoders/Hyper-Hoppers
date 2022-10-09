@@ -1,0 +1,6 @@
+{
+  "parent": "hyper_hoppers:block/hypper_spout",
+  "textures": {
+    "material": "hyper_hoppers:block/copper_hypper"
+  }
+}

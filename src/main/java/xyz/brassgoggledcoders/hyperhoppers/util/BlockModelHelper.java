@@ -12,18 +12,27 @@ import xyz.brassgoggledcoders.hyperhoppers.block.PassductBlock;
 import java.util.Arrays;
 
 public class BlockModelHelper {
+
     public static <T extends Block> void passductBlockState(DataGenContext<Block, T> context, RegistrateBlockstateProvider provider) {
+        spoutBlockState(context, provider, "passduct");
+    }
+
+    public static <T extends Block> void hypperBlockState(DataGenContext<Block, T> context, RegistrateBlockstateProvider provider) {
+        spoutBlockState(context, provider, "hypper");
+    }
+
+    public static <T extends Block> void spoutBlockState(DataGenContext<Block, T> context, RegistrateBlockstateProvider provider, String name) {
         BlockModelBuilder top = provider.models()
-                .withExistingParent("%s_top".formatted(context.getName()), provider.modLoc("block/passduct_top"))
+                .withExistingParent("%s_top".formatted(context.getName()), provider.modLoc("block/%s_top".formatted(name)))
                 .texture("material", provider.modLoc("block/%s".formatted(context.getName())));
         BlockModelBuilder middleStraight = provider.models()
-                .withExistingParent("%s_middle_straight".formatted(context.getName()), provider.modLoc("block/passduct_middle_straight"))
+                .withExistingParent("%s_middle_straight".formatted(context.getName()), provider.modLoc("block/%s_middle_straight".formatted(name)))
                 .texture("material", provider.modLoc("block/%s".formatted(context.getName())));
         BlockModelBuilder middleAngle = provider.models()
-                .withExistingParent("%s_middle_angle".formatted(context.getName()), provider.modLoc("block/passduct_middle_angle"))
+                .withExistingParent("%s_middle_angle".formatted(context.getName()), provider.modLoc("block/%s_middle_angle".formatted(name)))
                 .texture("material", provider.modLoc("block/%s".formatted(context.getName())));
         BlockModelBuilder spout = provider.models()
-                .withExistingParent("%s_spout".formatted(context.getName()), provider.modLoc("block/passduct_spout"))
+                .withExistingParent("%s_spout".formatted(context.getName()), provider.modLoc("block/%s_spout".formatted(name)))
                 .texture("material", provider.modLoc("block/%s".formatted(context.getName())));
 
         provider.models()

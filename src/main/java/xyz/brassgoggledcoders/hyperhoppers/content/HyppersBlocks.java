@@ -94,6 +94,31 @@ public class HyppersBlocks {
             .build()
             .register();
 
+    public static final BlockEntry<HypperBlock> COPPER_HYPPER = HyperHoppers.getRegistrate()
+            .object("copper_hypper")
+            .block(properties -> new HypperBlock(properties, 1, 4, 20))
+            .initialProperties(Material.METAL, MaterialColor.COLOR_ORANGE)
+            .properties(properties -> properties.strength(3.0F, 4.8F)
+                    .sound(SoundType.METAL)
+            )
+            .properties(BlockBehaviour.Properties::requiresCorrectToolForDrops)
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::randomTicks)
+            .blockstate(BlockModelHelper::hypperBlockState)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .item()
+            .recipe((context, provider) -> ShapedRecipeBuilder.shaped(context.get(), 4)
+                    .pattern("ici")
+                    .pattern(" i ")
+                    .define('c', Tags.Items.CHESTS)
+                    .define('i', Tags.Items.INGOTS_COPPER)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(Tags.Items.INGOTS_COPPER))
+                    .save(provider)
+            )
+            .model((context, provider) -> provider.blockItem(context, "_full"))
+            .build()
+            .register();
+
     public static final BlockEntry<PassductBlock> GOLD_PASSDUCT = HyperHoppers.getRegistrate()
             .object("gold_passduct")
             .block(properties -> new PassductBlock(properties, 5, 1))
@@ -156,6 +181,7 @@ public class HyppersBlocks {
     public static BlockEntityEntry<HypperBlockEntity> HYPPER_ENTITY = HyperHoppers.getRegistrate()
             .blockEntity(HypperBlockEntity::new)
             .validBlock(IRON_HYPPER)
+            .validBlock(COPPER_HYPPER)
             .register();
 
     public static void setup() {

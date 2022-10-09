@@ -1,0 +1,24 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "parts": {
+    "top": {
+      "parent": "hyper_hoppers:block/hypper_top",
+      "textures": {
+        "material": "hyper_hoppers:block/copper_hypper"
+      }
+    },
+    "middle": {
+      "parent": "hyper_hoppers:block/hypper_middle_straight",
+      "textures": {
+        "material": "hyper_hoppers:block/copper_hypper"
+      }
+    },
+    "spout": {
+      "parent": "hyper_hoppers:block/hypper_spout",
+      "textures": {
+        "material": "hyper_hoppers:block/copper_hypper"
+      }
+    }
+  }
+}
