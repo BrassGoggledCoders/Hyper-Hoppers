@@ -43,7 +43,6 @@ public class PassductBlockEntity extends BlockEntity {
     }
 
     /**
-     *
      * @return if the block should be considered jammed
      */
     public boolean routinePush() {
@@ -78,9 +77,7 @@ public class PassductBlockEntity extends BlockEntity {
         }
         if (this.getLevel() != null) {
             if (attempts < this.getMaxAttempts()) {
-                if (this.scheduleTick()) {
-                    this.getLevel().scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
-                }
+                this.getLevel().scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
             } else {
                 this.getLevel().setBlock(this.getBlockPos(), this.getBlockState().setValue(PassductBlock.JAMMED, true), Block.UPDATE_ALL);
             }
@@ -142,13 +139,9 @@ public class PassductBlockEntity extends BlockEntity {
         return this.getBlockState().getBlock() instanceof PassductBlock passductBlock ? passductBlock.getMaxAttempts() : 1;
     }
 
-    public boolean scheduleTick() {
-        return this.getBlockState().getBlock() instanceof PassductBlock passductBlock && passductBlock.isScheduleTicks();
-    }
-
     public void onChange() {
         this.setChanged();
-        if (this.scheduleTick() && this.getItemHandler().hasItems() && this.level != null) {
+        if (this.getItemHandler().hasItems() && this.level != null) {
             if (!this.level.getBlockTicks().hasScheduledTick(this.getBlockPos(), this.getBlockState().getBlock())) {
                 this.level.scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 20);
             }
