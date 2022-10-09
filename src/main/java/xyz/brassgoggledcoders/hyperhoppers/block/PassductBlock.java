@@ -201,8 +201,4 @@ public class PassductBlock extends Block implements EntityBlock {
     public int getMaxAttempts() {
         return maxAttempts;
     }
-
-    public boolean isScheduleTicks() {
-        return scheduleTicks;
-    }
 }

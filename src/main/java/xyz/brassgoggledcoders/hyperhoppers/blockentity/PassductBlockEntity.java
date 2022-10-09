@@ -44,7 +44,6 @@ public class PassductBlockEntity extends BlockEntity {
 
     /**
      *
-     * @param random if via random tick and not scheduled
      * @return if the block should be considered jammed
      */
     public boolean routinePush() {
