@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
 import xyz.brassgoggledcoders.hyperhoppers.capability.HypperSlotsHandler;
-import xyz.brassgoggledcoders.hyperhoppers.capability.ModuleItemHandler;
+import xyz.brassgoggledcoders.hyperhoppers.capability.UpgradeItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.HypperMenu;
@@ -19,14 +19,14 @@ import java.util.List;
 
 public class HypperBlockEntity extends BlockEntity {
     private final HypperSlotsHandler slots;
-    private final ModuleItemHandler modules;
+    private final UpgradeItemHandler modules;
 
     private int countdown;
 
     public HypperBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
         this.slots = new HypperSlotsHandler(5, this::setChanged);
-        this.modules = new ModuleItemHandler(2, this::setChanged);
+        this.modules = new UpgradeItemHandler(2, this::setChanged);
     }
 
     public void openMenu(Player player) {

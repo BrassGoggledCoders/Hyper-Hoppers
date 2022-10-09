@@ -1,18 +1,18 @@
-package xyz.brassgoggledcoders.hyperhoppers.module.filter;
+package xyz.brassgoggledcoders.hyperhoppers.upgrade.filter;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import xyz.brassgoggledcoders.hyperhoppers.module.Module;
+import xyz.brassgoggledcoders.hyperhoppers.upgrade.Upgrade;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SoftFilterModule extends Module implements IFilter {
+public class SoftFilterUpgrade extends Upgrade implements IFilter {
     private final Set<Item> items;
     private final boolean whitelist;
 
-    public SoftFilterModule(Collection<ItemStack> inputs, boolean whitelist) {
+    public SoftFilterUpgrade(Collection<ItemStack> inputs, boolean whitelist) {
         this.whitelist = whitelist;
         this.items = new HashSet<>();
 

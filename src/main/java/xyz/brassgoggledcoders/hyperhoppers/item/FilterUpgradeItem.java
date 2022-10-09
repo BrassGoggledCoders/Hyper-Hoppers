@@ -15,24 +15,24 @@ import xyz.brassgoggledcoders.hyperhoppers.capability.RunnableItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.FilterMenu;
-import xyz.brassgoggledcoders.hyperhoppers.module.IModuleProvider;
-import xyz.brassgoggledcoders.hyperhoppers.module.Module;
+import xyz.brassgoggledcoders.hyperhoppers.upgrade.IUpgradeProvider;
+import xyz.brassgoggledcoders.hyperhoppers.upgrade.Upgrade;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Function;
 
-public class FilterModuleItem extends Item implements IModuleProvider {
-    private final Function<Collection<ItemStack>, Module> supplier;
+public class FilterUpgradeItem extends Item implements IUpgradeProvider {
+    private final Function<Collection<ItemStack>, Upgrade> supplier;
 
-    public FilterModuleItem(Properties pProperties, Function<Collection<ItemStack>, Module> supplier) {
+    public FilterUpgradeItem(Properties pProperties, Function<Collection<ItemStack>, Upgrade> supplier) {
         super(pProperties);
         this.supplier = supplier;
     }
 
     @Override
-    public Collection<Module> apply(ItemStack itemStack) {
+    public Collection<Upgrade> apply(ItemStack itemStack) {
         RunnableItemHandler itemHandler = getFilterInventory(itemStack);
         return Collections.singleton(supplier.apply(itemHandler.getStacks()));
     }

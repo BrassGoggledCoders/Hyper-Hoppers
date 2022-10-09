@@ -4,7 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
-import xyz.brassgoggledcoders.hyperhoppers.module.IModuleProvider;
+import xyz.brassgoggledcoders.hyperhoppers.upgrade.IUpgradeProvider;
 
 import javax.annotation.Nonnull;
 
@@ -25,6 +25,6 @@ public class ModuleSlot extends SlotItemHandler {
 
     @Override
     public boolean mayPlace(@Nonnull ItemStack stack) {
-        return super.mayPlace(stack) && stack.getItem() instanceof IModuleProvider;
+        return super.mayPlace(stack) && stack.getItem() instanceof IUpgradeProvider;
     }
 }
