@@ -11,9 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -21,6 +23,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -35,10 +39,11 @@ import java.util.EnumMap;
 import java.util.Objects;
 import java.util.Random;
 
-public class PassductBlock extends Block implements EntityBlock {
+public class PassductBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final Property<Direction> SPOUT = EnumProperty.create("spout", Direction.class);
     public static final BooleanProperty JAMMED = HyperHoppersBlockStateProperties.JAMMED;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final Table<Direction, Direction, VoxelShape> VOXEL_SHAPE_TABLE = HashBasedTable.create();
     private static final EnumMap<Direction, VoxelShape> FACING_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
@@ -70,6 +75,7 @@ public class PassductBlock extends Block implements EntityBlock {
                 .setValue(FACING, Direction.UP)
                 .setValue(SPOUT, Direction.DOWN)
                 .setValue(JAMMED, false)
+                .setValue(WATERLOGGED, false)
         );
     }
 
@@ -90,7 +96,14 @@ public class PassductBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, SPOUT, JAMMED);
+        pBuilder.add(FACING, SPOUT, JAMMED, WATERLOGGED);
+    }
+
+    @Override
+    @NotNull
+    @SuppressWarnings("deprecation")
+    public FluidState getFluidState(BlockState pState) {
+        return pState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
     }
 
     @Nullable
@@ -103,9 +116,13 @@ public class PassductBlock extends Block implements EntityBlock {
             facing = facing.getOpposite();
         }
 
+        FluidState fluidState = pContext.getLevel()
+                .getFluidState(pContext.getClickedPos());
+
         return this.defaultBlockState()
                 .setValue(FACING, facing)
-                .setValue(SPOUT, spout);
+                .setValue(SPOUT, spout)
+                .setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
     }
 
     @Override
@@ -192,6 +209,19 @@ public class PassductBlock extends Block implements EntityBlock {
         if (pState.getValue(JAMMED)) {
             CampfireBlock.makeParticles(pLevel, pPos, false, false);
         }
+    }
+
+    @Override
+    @NotNull
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel,
+                                  BlockPos pCurrentPos, BlockPos pFacingPos) {
+        if (pState.getValue(WATERLOGGED)) {
+            pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+        }
+
+        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
 
     public int getSlots() {
