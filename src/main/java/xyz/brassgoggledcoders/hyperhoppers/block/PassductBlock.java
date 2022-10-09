@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -41,7 +40,7 @@ import java.util.Random;
 
 public class PassductBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
-    public static final Property<Direction> SPOUT = EnumProperty.create("spout", Direction.class);
+    public static final Property<Direction> SPOUT = HyperHoppersBlockStateProperties.SPOUT;
     public static final BooleanProperty JAMMED = HyperHoppersBlockStateProperties.JAMMED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 

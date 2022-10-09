@@ -12,16 +12,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -37,9 +41,10 @@ import java.util.EnumMap;
 import java.util.Objects;
 import java.util.Random;
 
-public class HypperBlock extends Block implements EntityBlock {
+public class HypperBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
-    public static final Property<Direction> SPOUT = EnumProperty.create("spout", Direction.class);
+    public static final Property<Direction> SPOUT = HyperHoppersBlockStateProperties.SPOUT;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final Table<Direction, Direction, VoxelShape> VOXEL_SHAPE_TABLE = HashBasedTable.create();
     private static final EnumMap<Direction, VoxelShape> FACING_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
@@ -73,6 +78,7 @@ public class HypperBlock extends Block implements EntityBlock {
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(FACING, Direction.UP)
                 .setValue(SPOUT, Direction.DOWN)
+                .setValue(WATERLOGGED, false)
         );
     }
 
@@ -93,7 +99,7 @@ public class HypperBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, SPOUT);
+        pBuilder.add(FACING, SPOUT, WATERLOGGED);
     }
 
     @Nullable
@@ -106,9 +112,13 @@ public class HypperBlock extends Block implements EntityBlock {
             facing = facing.getOpposite();
         }
 
+        FluidState fluidState = pContext.getLevel()
+                .getFluidState(pContext.getClickedPos());
+
         return this.defaultBlockState()
                 .setValue(FACING, facing)
-                .setValue(SPOUT, spout);
+                .setValue(SPOUT, spout)
+                .setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
     }
 
     @Override
@@ -196,6 +206,19 @@ public class HypperBlock extends Block implements EntityBlock {
            );
         }
         return null;
+    }
+
+    @Override
+    @NotNull
+    @SuppressWarnings("deprecation")
+    @ParametersAreNonnullByDefault
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel,
+                                  BlockPos pCurrentPos, BlockPos pFacingPos) {
+        if (pState.getValue(WATERLOGGED)) {
+            pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+        }
+
+        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
 
     public int getSlots() {
