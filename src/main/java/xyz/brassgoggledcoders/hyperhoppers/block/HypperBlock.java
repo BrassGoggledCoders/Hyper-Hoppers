@@ -35,7 +35,6 @@ import org.jetbrains.annotations.Nullable;
 import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.IHypperSlot;
 import xyz.brassgoggledcoders.hyperhoppers.blockentity.HypperBlockEntity;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
-import xyz.brassgoggledcoders.hyperhoppers.slot.HypperSlot;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
@@ -200,11 +199,11 @@ public class HypperBlock extends Block implements EntityBlock, SimpleWaterlogged
     @ParametersAreNonnullByDefault
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide()) {
-           return createTickerHelper(
-                   pBlockEntityType,
-                   HyppersBlocks.HYPPER_ENTITY.get(),
-                   (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(false)
-           );
+            return createTickerHelper(
+                    pBlockEntityType,
+                    HyppersBlocks.HYPPER_ENTITY.get(),
+                    (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(false)
+            );
         }
         return null;
     }
@@ -236,6 +235,6 @@ public class HypperBlock extends Block implements EntityBlock, SimpleWaterlogged
 
     @SuppressWarnings("unchecked")
     private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> p_152133_, BlockEntityType<E> p_152134_, BlockEntityTicker<? super E> p_152135_) {
-        return p_152134_ == p_152133_ ? (BlockEntityTicker<A>)p_152135_ : null;
+        return p_152134_ == p_152133_ ? (BlockEntityTicker<A>) p_152135_ : null;
     }
 }

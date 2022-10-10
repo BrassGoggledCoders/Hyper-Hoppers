@@ -7,9 +7,13 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.HypperSlotType;
+import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.HypperSlotTypes;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersBlocks;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersItems;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
+import xyz.brassgoggledcoders.hyperhoppers.slot.FluidicHypperSlot;
+import xyz.brassgoggledcoders.hyperhoppers.slot.ItemHypperSlot;
 
 import java.util.function.Supplier;
 
@@ -31,6 +35,9 @@ public class HyperHoppers {
         HyppersBlocks.setup();
         HyppersItems.setup();
         HyppersMenus.setup();
+
+        HypperSlotTypes.ITEM = new HypperSlotType(ItemHypperSlot::createForItem);
+        HypperSlotTypes.FLUID = new HypperSlotType(FluidicHypperSlot::createForFluid);
     }
 
     public static Registrate getRegistrate() {

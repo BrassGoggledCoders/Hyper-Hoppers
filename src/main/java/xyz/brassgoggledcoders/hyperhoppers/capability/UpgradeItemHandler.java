@@ -5,6 +5,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
+import xyz.brassgoggledcoders.hyperhoppers.api.block.IHypper;
 import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.IUpgradeProvider;
 import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.Upgrade;
 
@@ -13,11 +14,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UpgradeItemHandler implements IItemHandlerModifiable {
+    private final IHypper hypper;
     private final int slots;
     private final NonNullList<Pair<ItemStack, Set<Upgrade>>> upgrades;
     private final Runnable onChange;
 
-    public UpgradeItemHandler(int slots, Runnable onChange) {
+    public UpgradeItemHandler(IHypper hypper, int slots, Runnable onChange) {
+        this.hypper = hypper;
         this.slots = slots;
         this.upgrades = NonNullList.withSize(slots, Pair.of(ItemStack.EMPTY, Collections.emptySet()));
         this.onChange = onChange;
@@ -41,7 +44,9 @@ public class UpgradeItemHandler implements IItemHandlerModifiable {
             stack = stack.copy();
             ItemStack newStack = stack.split(1);
             if (!newStack.isEmpty() && !simulate) {
-                this.upgrades.set(slot, Pair.of(newStack, new HashSet<>(provider.apply(newStack))));
+                Set<Upgrade> insertedUpgrades =  new HashSet<>(provider.apply(newStack));
+                this.upgrades.set(slot, Pair.of(newStack, insertedUpgrades));
+                insertedUpgrades.forEach(upgrade -> upgrade.onAdded(this.hypper, slot));
                 this.onChange.run();
             }
         }
@@ -51,12 +56,13 @@ public class UpgradeItemHandler implements IItemHandlerModifiable {
     @NotNull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        Pair<ItemStack, Set<Upgrade>> modulePair = this.upgrades.get(slot);
-        if (!simulate && !modulePair.getFirst().isEmpty()) {
+        Pair<ItemStack, Set<Upgrade>> upgradePair = this.upgrades.get(slot);
+        if (!simulate && !upgradePair.getFirst().isEmpty()) {
+            upgradePair.getSecond().forEach(upgrade -> upgrade.onRemoved(this.hypper, slot));
             this.upgrades.set(slot, Pair.of(ItemStack.EMPTY, Collections.emptySet()));
             this.onChange.run();
         }
-        return modulePair.getFirst();
+        return upgradePair.getFirst();
     }
 
     @Override

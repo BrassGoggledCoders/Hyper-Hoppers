@@ -18,13 +18,13 @@ import xyz.brassgoggledcoders.hyperhoppers.capability.UpgradeItemHandler;
 import xyz.brassgoggledcoders.hyperhoppers.content.HyppersMenus;
 import xyz.brassgoggledcoders.hyperhoppers.menu.BasicMenuProvider;
 import xyz.brassgoggledcoders.hyperhoppers.menu.HypperMenu;
-import xyz.brassgoggledcoders.hyperhoppers.slot.ItemSlot;
+import xyz.brassgoggledcoders.hyperhoppers.slot.ItemHypperSlot;
 
 import java.util.Objects;
 
 public class HypperBlockEntity extends BlockEntity implements IHypper {
     private final UpgradeItemHandler upgrades;
-    private IHypperSlot<?>[] slots;
+    private final IHypperSlot<?>[] slots;
 
     private int countdown;
 
@@ -32,9 +32,9 @@ public class HypperBlockEntity extends BlockEntity implements IHypper {
         super(pType, pWorldPosition, pBlockState);
         this.slots = new IHypperSlot<?>[5];
         for (int i = 0; i < slots.length; i++) {
-            slots[i] = new ItemSlot();
+            slots[i] = new ItemHypperSlot();
         }
-        this.upgrades = new UpgradeItemHandler(2, this::setChanged);
+        this.upgrades = new UpgradeItemHandler(this, 2, this::setChanged);
     }
 
     public void openMenu(Player player) {
@@ -65,7 +65,7 @@ public class HypperBlockEntity extends BlockEntity implements IHypper {
 
     @Override
     public void setSlot(int slot, @Nullable IHypperSlot<?> hypperSlot) {
-        this.slots[slot] = Objects.requireNonNullElseGet(hypperSlot, ItemSlot::new);
+        this.slots[slot] = Objects.requireNonNullElseGet(hypperSlot, ItemHypperSlot::new);
     }
 
     @Override
