@@ -48,20 +48,29 @@ public class HypperBlock extends Block implements EntityBlock, SimpleWaterlogged
 
     private static final Table<Direction, Direction, VoxelShape> VOXEL_SHAPE_TABLE = HashBasedTable.create();
     private static final EnumMap<Direction, VoxelShape> FACING_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
-        map.put(Direction.DOWN, Block.box(3.0D, 0.0D, 3.0D, 13.0D, 8.0D, 13.0D));
-        map.put(Direction.UP, Block.box(3.0D, 8.0D, 3.0D, 13.0D, 16.0D, 13.0D));
-        map.put(Direction.NORTH, Block.box(3.0D, 3.0D, 0.0D, 13.0D, 13.0D, 8.0D));
-        map.put(Direction.SOUTH, Block.box(3.0D, 3.0D, 8.0D, 13.0D, 13.0D, 16.0D));
-        map.put(Direction.EAST, Block.box(8.0D, 3.0D, 3.0D, 16.0D, 13.0D, 13.0D));
-        map.put(Direction.WEST, Block.box(0.0D, 3.0D, 3.0D, 8.0D, 13.0D, 13.0D));
+        map.put(Direction.DOWN, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D));
+        map.put(Direction.UP, Block.box(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+        map.put(Direction.NORTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 6.0D));
+        map.put(Direction.SOUTH, Block.box(0.0D, 0.0D, 10.0D, 16.0D, 16.0D, 16.0D));
+        map.put(Direction.EAST, Block.box(10.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+        map.put(Direction.WEST, Block.box(0.0D, 0.0D, 0.0D, 6.0D, 16.0D, 16.0D));
+    });
+
+    private static  final EnumMap<Direction, VoxelShape> MIDDLE_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
+        map.put(Direction.DOWN, Block.box(4.0D, 6.0D, 4.0D, 12.0D, 12.0D, 12.0D));
+        map.put(Direction.UP, Block.box(4.0D, 4.0D, 4.0D, 12.0D, 10.0D, 12.0D));
+        map.put(Direction.NORTH, Block.box(4.0D, 6.0D, 4.0D, 12.0D, 12.0D, 12.0D));
+        map.put(Direction.SOUTH, Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 10.0D));
+        map.put(Direction.EAST, Block.box(4.0D, 4.0D, 4.0D, 10.0D, 12.0D, 12.0D));
+        map.put(Direction.WEST, Block.box(6.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D));
     });
     private static final EnumMap<Direction, VoxelShape> SPOUT_SHAPE = Util.make(new EnumMap<>(Direction.class), map -> {
-        map.put(Direction.DOWN, Block.box(5.0D, 0.0D, 5.0D, 11.0D, 8.0D, 11.0D));
-        map.put(Direction.UP, Block.box(5.0D, 8.0D, 5.0D, 11.0D, 16.0D, 11.0D));
-        map.put(Direction.NORTH, Block.box(5.0D, 5.0D, 0.0D, 11.0D, 11.0D, 8.0D));
-        map.put(Direction.SOUTH, Block.box(5.0D, 5.0D, 8.0D, 11.0D, 11.0D, 16.0D));
-        map.put(Direction.EAST, Block.box(8.0D, 5.0D, 5.0D, 16.0D, 11.0D, 11.0D));
-        map.put(Direction.WEST, Block.box(0.0D, 5.0D, 5.0D, 8.0D, 11.0D, 11.0D));
+        map.put(Direction.DOWN, Block.box(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D));
+        map.put(Direction.UP, Block.box(6.0D, 12.0D, 6.0D, 10.0D, 16.0D, 10.0D));
+        map.put(Direction.NORTH, Block.box(6.0D, 6.0D, 0.0D, 10.0D, 10.0D, 4.0D));
+        map.put(Direction.SOUTH, Block.box(6.0D, 6.0D, 12.0D, 10.0D, 10.0D, 16.0D));
+        map.put(Direction.EAST, Block.box(12.0D, 6.0D, 6.0D, 16.0D, 10.0D, 10.0D));
+        map.put(Direction.WEST, Block.box(0.0D, 6.0D, 6.0D, 4.0D, 10.0D, 10.0D));
 
     });
 
@@ -91,7 +100,18 @@ public class HypperBlock extends Block implements EntityBlock, SimpleWaterlogged
         Direction spout = pState.getValue(SPOUT);
 
         if (!VOXEL_SHAPE_TABLE.contains(facing, spout)) {
-            VOXEL_SHAPE_TABLE.put(facing, spout, Shapes.or(FACING_SHAPE.get(facing), SPOUT_SHAPE.get(spout)));
+            VoxelShape middleShape = MIDDLE_SHAPE.get(facing);
+            if (facing.getAxis() != spout.getAxis()) {
+                middleShape = Block.box(
+                        (middleShape.min(Direction.Axis.X) * 16) + (facing.getStepX() * 2),
+                        (middleShape.min(Direction.Axis.Y) * 16) + (facing.getStepY() * 2),
+                        (middleShape.min(Direction.Axis.Z) * 16) + (facing.getStepZ() * 2),
+                        (middleShape.max(Direction.Axis.X) * 16) + (facing.getStepX() * 2),
+                        (middleShape.max(Direction.Axis.Y) * 16) + (facing.getStepY() * 2),
+                        (middleShape.max(Direction.Axis.Z) * 16) + (facing.getStepZ() * 2)
+                );
+            }
+            VOXEL_SHAPE_TABLE.put(facing, spout, Shapes.or(FACING_SHAPE.get(facing), middleShape, SPOUT_SHAPE.get(spout)));
         }
 
         return Objects.requireNonNull(VOXEL_SHAPE_TABLE.get(facing, spout));
