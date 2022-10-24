@@ -8,8 +8,8 @@ import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.IUpgradeProvider;
 
 import javax.annotation.Nonnull;
 
-public class ModuleSlot extends SlotItemHandler {
-    public ModuleSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+public class UpgradeSlot extends SlotItemHandler {
+    public UpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
     }
 

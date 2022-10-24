@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.hyperhoppers.content;
 
+import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.util.entry.MenuEntry;
 import xyz.brassgoggledcoders.hyperhoppers.HyperHoppers;
 import xyz.brassgoggledcoders.hyperhoppers.menu.FilterMenu;
@@ -13,7 +14,7 @@ public class HyppersMenus {
             .register();
 
     public static final MenuEntry<HypperMenu> HYPPER_MENU = HyperHoppers.getRegistrate()
-            .menu(HypperMenu::new, () -> HypperScreen::new)
+            .menu((MenuBuilder.MenuFactory<HypperMenu>) HypperMenu::new, () -> HypperScreen::new)
             .register();
 
     public static void setup() {

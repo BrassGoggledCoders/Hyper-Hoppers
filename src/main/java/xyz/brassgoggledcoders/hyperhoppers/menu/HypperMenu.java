@@ -7,36 +7,49 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import xyz.brassgoggledcoders.hyperhoppers.api.block.IHypper;
 import xyz.brassgoggledcoders.hyperhoppers.block.HypperBlock;
-import xyz.brassgoggledcoders.hyperhoppers.menu.slot.ModuleSlot;
+import xyz.brassgoggledcoders.hyperhoppers.capability.UpgradeItemHandler;
+import xyz.brassgoggledcoders.hyperhoppers.menu.slot.HypperMenuSlot;
+import xyz.brassgoggledcoders.hyperhoppers.menu.slot.UpgradeSlot;
+import xyz.brassgoggledcoders.hyperhoppers.screen.ClientHypper;
+import xyz.brassgoggledcoders.shadyskies.containersyncing.property.IPropertyManaged;
+import xyz.brassgoggledcoders.shadyskies.containersyncing.property.PropertyManager;
+import xyz.brassgoggledcoders.shadyskies.containersyncing.property.PropertyTypes;
 
-public class HypperMenu extends AbstractContainerMenu {
+public class HypperMenu extends AbstractContainerMenu implements IPropertyManaged {
     private final ContainerLevelAccess containerLevelAccess;
-    private final IItemHandler moduleItemHandler;
-    private final IItemHandler contentItemHandler;
+    private final PropertyManager propertyManager;
+    private final Inventory inventory;
 
     public HypperMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory inventory) {
-        this(pMenuType, pContainerId, inventory, new ItemStackHandler(2), new ItemStackHandler(5), ContainerLevelAccess.NULL);
+        this(pMenuType, pContainerId, inventory, new ClientHypper(5));
     }
 
-    public HypperMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory inventory, IItemHandler moduleItemHandler,
-                      IItemHandler contentItemHandler, ContainerLevelAccess access) {
+    public HypperMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory inventory, IHypper hypper) {
+        this(pMenuType, pContainerId, inventory, new UpgradeItemHandler(hypper, 2), hypper, ContainerLevelAccess.NULL);
+    }
+
+    public HypperMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory inventory, UpgradeItemHandler upgradeItemHandler,
+                      IHypper hypper, ContainerLevelAccess access) {
         super(pMenuType, pContainerId);
-        this.moduleItemHandler = moduleItemHandler;
-        this.contentItemHandler = contentItemHandler;
         this.containerLevelAccess = access;
+        this.inventory = inventory;
+        this.propertyManager = new PropertyManager((short) pContainerId);
 
         for (int moduleSlot = 0; moduleSlot < 2; ++moduleSlot) {
-            this.addSlot(new ModuleSlot(moduleItemHandler, moduleSlot, 8 + moduleSlot * 18, 20));
+            this.addSlot(new UpgradeSlot(upgradeItemHandler, moduleSlot, 8 + moduleSlot * 18, 20));
         }
 
         for (int contentSlot = 0; contentSlot < 5; ++contentSlot) {
-            this.addSlot(new SlotItemHandler(contentItemHandler, contentSlot, 62 + contentSlot * 18, 20));
+            int finalContentSlot = contentSlot;
+            this.propertyManager.addTrackedProperty(PropertyTypes.COMPOUND_TAG.create(
+                    () -> hypper.getSlots()[finalContentSlot].toNBT(),
+                    nbt -> hypper.getSlots()[finalContentSlot].fromNBT(nbt)
+            ));
+            this.addSlot(new HypperMenuSlot(hypper, contentSlot, 62 + contentSlot * 18, 20));
         }
 
         for (int inventoryRow = 0; inventoryRow < 3; ++inventoryRow) {
@@ -63,5 +76,22 @@ public class HypperMenu extends AbstractContainerMenu {
     @NotNull
     public ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void broadcastFullState() {
+        super.broadcastFullState();
+        this.propertyManager.sendChanges(inventory, true);
+    }
+
+    @Override
+    public void broadcastChanges() {
+        super.broadcastChanges();
+        this.propertyManager.sendChanges(inventory, false);
+    }
+
+    @Override
+    public PropertyManager getPropertyManager() {
+        return propertyManager;
     }
 }

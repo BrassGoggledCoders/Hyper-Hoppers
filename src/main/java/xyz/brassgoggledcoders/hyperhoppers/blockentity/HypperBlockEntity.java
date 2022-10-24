@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.hyperhoppers.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -50,8 +51,7 @@ public class HypperBlockEntity extends BlockEntity implements IHypper {
                                     containerId,
                                     inventory,
                                     upgrades,
-                                    //TODO FIX THE SLOTS
-                                    new ItemStackHandler(5),
+                                    this,
                                     ContainerLevelAccess.create(this.getLevel(), this.getBlockPos())
                             )
                     )
@@ -91,5 +91,17 @@ public class HypperBlockEntity extends BlockEntity implements IHypper {
 
     public int getAnalogSignal() {
         return 0;
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag pTag) {
+        super.load(pTag);
+        pTag.put("Upgrades", this.upgrades.serializeNBT());
+    }
+
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        this.upgrades.deserializeNBT(pTag.getCompound("Upgrades"));
     }
 }

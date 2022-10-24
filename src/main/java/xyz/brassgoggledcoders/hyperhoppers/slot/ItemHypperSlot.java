@@ -16,10 +16,15 @@ import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.IHypperSlot;
 import xyz.brassgoggledcoders.hyperhoppers.api.upgrade.slot.IItemHypperSlot;
 import xyz.brassgoggledcoders.hyperhoppers.capability.HypperSlotCapabilityProvider;
 import xyz.brassgoggledcoders.hyperhoppers.capability.ItemHypperSlotItemHandler;
+import xyz.brassgoggledcoders.hyperhoppers.capability.RunnableItemHandler;
 
 public class ItemHypperSlot implements IItemHypperSlot {
 
-    private ItemStack itemStack = ItemStack.EMPTY;
+    private final RunnableItemHandler itemHandler;
+
+    public ItemHypperSlot() {
+        this.itemHandler = new RunnableItemHandler(1, this::onChange);
+    }
 
     @Override
     public HypperSlotType getType() {
@@ -28,45 +33,49 @@ public class ItemHypperSlot implements IItemHypperSlot {
 
     @Override
     public ItemStack getContent() {
-        return itemStack;
+        return this.itemHandler.getStackInSlot(0);
     }
 
     @Override
     public void setContent(ItemStack content) {
-        this.itemStack = content;
+        this.itemHandler.setStackInSlot(0, content);
     }
 
     @Override
     public CompoundTag toNBT() {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.put("itemStack", this.itemStack.save(new CompoundTag()));
+        compoundTag.put("itemStack", this.itemHandler.getStackInSlot(0).save(new CompoundTag()));
         return compoundTag;
     }
 
     @Override
     public void fromNBT(CompoundTag compoundTag) {
-        this.itemStack = ItemStack.of(compoundTag.getCompound("itemStack"));
+        this.setContent(ItemStack.of(compoundTag.getCompound("itemStack")));
     }
 
     @Override
     public void onReplaced(@NotNull IHypper hypper, @Nullable IHypperSlot<?> replacement) {
+        ItemStack current = this.itemHandler.getStackInSlot(0);
         if (replacement instanceof ItemHypperSlot itemHypperSlot) {
-            this.itemStack = itemHypperSlot.insert(this.itemStack, false);
+            current = itemHypperSlot.insert(current, false);
         }
-        if (!this.itemStack.isEmpty()) {
-            this.itemStack = hypper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-                    .map(cap -> ItemHandlerHelper.insertItemStacked(cap, this.itemStack, false))
-                    .orElse(this.itemStack);
-        }
-        if (!this.itemStack.isEmpty()) {
-            BlockPos blockPos = hypper.getHypperPos();
-            Containers.dropItemStack(hypper.getHypperLevel(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack);
+        if (!hypper.getHypperLevel().isClientSide()) {
+            if (!current.isEmpty()) {
+                ItemStack finalCurrent = current;
+                current= hypper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                        .map(cap -> ItemHandlerHelper.insertItemStacked(cap, finalCurrent, false))
+                        .orElse(current);
+            }
+            if (!current.isEmpty()) {
+                BlockPos blockPos = hypper.getHypperPos();
+                Containers.dropItemStack(hypper.getHypperLevel(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), current);
+            }
         }
     }
 
     @Override
-    public ItemStack insert(ItemStack itemStack, boolean simulate) {
-        return itemStack;
+    public ItemStack insert(ItemStack inputStack, boolean simulate) {
+        return this.itemHandler.insertItem(0, inputStack, simulate);
     }
 
     @Override
@@ -81,7 +90,7 @@ public class ItemHypperSlot implements IItemHypperSlot {
 
     @Override
     public ItemStack extract(int amount, boolean simulate) {
-        return ItemStack.EMPTY;
+        return this.itemHandler.extractItem(0, amount, simulate);
     }
 
     public static ICapabilityProvider createForItem(IHypper hypper) {
